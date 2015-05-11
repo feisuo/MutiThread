@@ -65,7 +65,13 @@ public class Philosopher extends Thread {
 			if(left == -1){
 				left = 4;
 			}
-			pers[i] = new Philosopher("哲学家" + i,chop[i],chop[left]);
+			int right = i;
+			//破坏拿筷子的顺序，防止死锁
+			if(i == 0){
+				left = 0;
+				right = 4;
+			}
+			pers[i] = new Philosopher("哲学家" + i,chop[left],chop[right]);
 		}
 		// 创建线程需要耗费时间，所以等创建完毕后再启动，这样竞争锁更公平
 		for (int i = 0; i < pers.length; i++) {
